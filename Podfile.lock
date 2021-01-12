@@ -1,0 +1,38 @@
+PODS:
+  - Cosmos (23.0.0)
+  - CVCalendar (1.7.0)
+  - iOSDropDown (0.3.4)
+  - lottie-ios (3.1.9)
+  - SDWebImage (5.10.1):
+    - SDWebImage/Core (= 5.10.1)
+  - SDWebImage/Core (5.10.1)
+  - SideMenu (6.5.0)
+
+DEPENDENCIES:
+  - Cosmos
+  - CVCalendar
+  - iOSDropDown
+  - lottie-ios
+  - SDWebImage
+  - SideMenu
+
+SPEC REPOS:
+  trunk:
+    - Cosmos
+    - CVCalendar
+    - iOSDropDown
+    - lottie-ios
+    - SDWebImage
+    - SideMenu
+
+SPEC CHECKSUMS:
+  Cosmos: b5c6a9a637e28a061b54c8f8b1d8529d7d4db73f
+  CVCalendar: 1174c1b43c1a258970e14c1e8b19ef4106c5900b
+  iOSDropDown: c10a761f9a00c3f1cc9d3bce43ae504628e2f692
+  lottie-ios: 3a3758ef5a008e762faec9c9d50a39842f26d124
+  SDWebImage: f66a16b95183b92ed6b965ad21d33167bc07612d
+  SideMenu: f583187d21c5b1dd04c72002be544b555a2627a2
+
+PODFILE CHECKSUM: e789efdc6c3a0e3f4d8c90da32524478d3bcb6cd
+
+COCOAPODS: 1.10.0
