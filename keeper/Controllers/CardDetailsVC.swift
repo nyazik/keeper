@@ -34,7 +34,6 @@ class CardDetailsVC: UIViewController {
         super.viewDidLoad()
         hideKeyboardWhenTappedAround()
         setupLayouts()
-        print("******\(selectedServiceID)")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -71,8 +70,16 @@ class CardDetailsVC: UIViewController {
     }
     
     @IBAction func backButtonPressed(_ sender: UIButton) {
-        
-        dismiss(animated: false, completion: nil)
+        let vc = self.storyboard?.instantiateViewController(identifier: "BuyPackageSubscribeVC") as! BuyPackageSubscribeVC
+        vc.selectedServiceID = selectedServiceID
+        vc.packageID = packageID
+        vc.packetName = packageID
+        vc.startEndDate = startEndDate
+        vc.remainingRights =  remainingRights
+        vc.price = price
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: false, completion: nil)
+
     }
     
     @IBAction func payButtonPressed(_ sender: UIButton) {
@@ -97,11 +104,18 @@ class CardDetailsVC: UIViewController {
         vc.remainingRights = remainingRights
         vc.packageID = packageID
         vc.price = price
+        
+        vc.nameSurnameTextField = nameSurnameTextField.text!
+        vc.cardNumberTextField = cardNumberTextField.text!
+        vc.expirationMonthTextField = expirationMonthTextField.text!
+        vc.expirationYearTextField = expirationYearTextField.text!
+        vc.CCVTextField =  CCVTextField.text!
+        
+        
         vc.modalPresentationStyle = .fullScreen
         
         self.present(vc, animated: false, completion: nil)
     }
-    
     
     func configureTextField(textField: UITextField){
         textField.setRightPaddingPoints(20)

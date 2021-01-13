@@ -60,20 +60,9 @@ class CleanningDetailVC: UIViewController{
         commentsTableView.delegate = self
         advantagesTableView.dataSource = self
         advantagesTableView.delegate = self
-        
         commentTextView.delegate = self
     }
     
-    
-    
-    func configureRatingView(){
-        commentRatingView.didFinishTouchingCosmos = { rating in
-            print("pitchRateView = \(rating)")
-            self.commentRateValue = rating
-        }
-        commentRatingView.settings.starSize = 25
-
-    }
     
     override func viewWillAppear(_ animated: Bool) {
         
@@ -83,7 +72,6 @@ class CleanningDetailVC: UIViewController{
     override func viewWillDisappear(_ animated: Bool) {
         removeKeyboardObserver()
     }
-
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -98,7 +86,16 @@ class CleanningDetailVC: UIViewController{
         self.loadViewIfNeeded()
         commentsTableViewHeightConstraint.constant = self.commentsTableView.contentSize.height
     }
+    
+    func configureRatingView(){
+        commentRatingView.didFinishTouchingCosmos = { rating in
+            print("pitchRateView = \(rating)")
+            self.commentRateValue = rating
+        }
+        commentRatingView.settings.starSize = 25
 
+    }
+   
     func setupLayouts(){
         mainImageView.layer.borderWidth = 2
         mainImageView.layer.borderColor = UIColor.lightText.cgColor
@@ -110,12 +107,15 @@ class CleanningDetailVC: UIViewController{
         configureborderView(view: serviceNameView)
         configurePaddingView(textField: commentTitleTextField)
         configureTextView(textView: commentTextView)
+        commentTextView.text = "Yorumunuz"
+        
+        
     }
     
     func configureTextView(textView : UITextView){
         textView.layer.cornerRadius = 15
         textView.padding()
-        textView.text = "Yorumunuz"
+        //textView.text = "Yorumunuz"
         textView.textColor = UIColor.lightGray
         
     }
@@ -136,6 +136,32 @@ class CleanningDetailVC: UIViewController{
         view.layer.borderColor = UIColor.white.cgColor
     }
     
+    
+    //MARK: -LOTTIE
+    func addViewsForAnimation() {
+        animationBackView = UIView(frame: CGRect(x: 0, y: 0, width: Int(self.view.frame.size.width), height: Int(self.view.frame.size.height)))
+        animationBackView.backgroundColor = UIColor.lightGray
+        animationBackView.alpha = 0.5
+        self.view.addSubview(animationBackView)
+        
+        animationView = .init(name: "loading")
+        animationView.contentMode = .scaleAspectFit
+        animationView.frame = CGRect(x: (self.view.frame.size.width / 2) - 100, y: (self.view.frame.size.height / 2) - 100, width: 200, height: 200)
+        animationView.loopMode = .loop
+        self.view.addSubview(animationView)
+        animationView.play()
+    }
+    
+    func removeViewsForAnimation() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.animationView.stop()
+            self.animationBackView.removeFromSuperview()
+            self.animationView.removeFromSuperview()
+        }
+    }
+    
+    //MARK:- UIButtons
+    
     @IBAction func orderButtonPressed(_ sender: UIButton) {
         let vc = self.storyboard?.instantiateViewController(identifier: "BuyPackageSubscribeVC") as! BuyPackageSubscribeVC
         vc.selectedServiceID = selectedServiceID
@@ -149,7 +175,7 @@ class CleanningDetailVC: UIViewController{
     }
     
     @IBAction func sendCommentButtonPressed(_ sender: UIButton) {
-        if commentTitleTextField.text != "" &&  commentTextView.text != ""{
+        if commentTitleTextField.text != "" &&  commentTextView.text != "" && commentTextView.text != "Yorumunuz" {
             sendComment()
             commentsArray.removeAll()
             getServiceDetails()
@@ -324,28 +350,7 @@ class CleanningDetailVC: UIViewController{
         task.resume()
     }
     
-    //MARK: -LOTTIE
-    func addViewsForAnimation() {
-        animationBackView = UIView(frame: CGRect(x: 0, y: 0, width: Int(self.view.frame.size.width), height: Int(self.view.frame.size.height)))
-        animationBackView.backgroundColor = UIColor.lightGray
-        animationBackView.alpha = 0.5
-        self.view.addSubview(animationBackView)
-        
-        animationView = .init(name: "loading")
-        animationView.contentMode = .scaleAspectFit
-        animationView.frame = CGRect(x: (self.view.frame.size.width / 2) - 100, y: (self.view.frame.size.height / 2) - 100, width: 200, height: 200)
-        animationView.loopMode = .loop
-        self.view.addSubview(animationView)
-        animationView.play()
-    }
     
-    func removeViewsForAnimation() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.animationView.stop()
-            self.animationBackView.removeFromSuperview()
-            self.animationView.removeFromSuperview()
-        }
-    }
 
 }
 
@@ -394,30 +399,27 @@ extension CleanningDetailVC: UITableViewDataSource, UITableViewDelegate{
         return UITableView.automaticDimension
     }
    
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return UITableView.automaticDimension
-//
-//    }
+
     
 }
 
 extension CleanningDetailVC: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.textColor == UIColor.lightGray {
-            if textView.text == "" {
-                textView.text = "Yorumunuz"
-            }
-            textView.text = nil
+        
+        if textView.text == "Yorumunuz" {
+            textView.text = ""
             textView.textColor = UIColor.black
         }
+        
     }
     
     
     func textViewDidEndEditing(_ textView: UITextView) {
-             if textView.text == "Yorumunuz" {
-                textView.text  = ""
-            }
+        if textView.text == "" {
+            textView.text  = "Yorumunuz"
             textView.textColor = UIColor.lightGray
+        }
+        
         
     }
 }

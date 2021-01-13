@@ -35,7 +35,6 @@ class DateTimeSelectionVC: UIViewController {
     private var animationBackView = UIView()
     private var animationView = AnimationView()
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -50,6 +49,7 @@ class DateTimeSelectionVC: UIViewController {
         print("***\(packageID)")
         hideKeyboardWhenTappedAround()
     }
+    
     func selectedStartingTime(){
         let path = NSIndexPath(item: 0, section: 0)
 //        print("path \(path)")
@@ -77,9 +77,6 @@ class DateTimeSelectionVC: UIViewController {
         customizeGetServiceButton(button: getServiceButton)
     }
     
-    
-    
-    
     func customizeGetServiceButton(button: UIButton){
         button.layer.cornerRadius = 15
     }
@@ -88,9 +85,9 @@ class DateTimeSelectionVC: UIViewController {
         textView.layer.cornerRadius = 15
         textView.padding()
         if textView == addressTextView{
-            //textView.text = "Adresinizi Giriniz"
+            textView.text = "Adresinizi Giriniz"
         }else if textView == customerNoteTextView{
-            //textView.text = "Notunuzu Yazınız."
+            textView.text = "Notunuzu Yazınız."
         }
         textView.textColor = UIColor.lightGray
     }
@@ -108,7 +105,7 @@ class DateTimeSelectionVC: UIViewController {
     }
     
     @IBAction func getServiceButtonPressed(_ sender: UIButton) {
-        if customerNoteTextView.text != "" && addressTextView.text != "" {
+        if customerNoteTextView.text != "" && addressTextView.text != "" && addressTextView.text != "Adresinizi Giriniz" && customerNoteTextView.text != "Notunuzu Yazınız"  {
             postOrder()
             print("success")
             let vc = self.storyboard?.instantiateViewController(identifier: "HomeVC") as! HomeVC
@@ -363,6 +360,7 @@ struct ColorsConfig {
 
 extension DateTimeSelectionVC  : UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
+        
         if textView.textColor == UIColor.lightGray {
             textView.text = nil
             textView.textColor = UIColor.black
@@ -374,7 +372,7 @@ extension DateTimeSelectionVC  : UITextViewDelegate {
             if textView == addressTextView{
                 textView.text = "Adresinizi Giriniz"
             }else if textView == customerNoteTextView{
-                textView.text = "Notunuzu Yazınız."
+                textView.text = "Notunuzu Yazınız"
             }
             textView.textColor = UIColor.lightGray
         }

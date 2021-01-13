@@ -10,13 +10,18 @@ import UIKit
 class MySubscriptionsVC: UIViewController {
     
     @IBOutlet weak var subscriptionTableView: UITableView!
+    @IBOutlet weak var tableViewHeightConstraint: NSLayoutConstraint!
     
     var ordersArray = [OrdersDataResponse]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableViewHeightConstraint.constant = CGFloat.greatestFiniteMagnitude
+        self.subscriptionTableView.reloadData()
+        tableViewHeightConstraint.constant = self.subscriptionTableView.contentSize.height
         //CALLING API
         getOrders()
+        
     }
     
     @IBAction func backButtonPressed(_ sender: UIButton) {
@@ -64,6 +69,11 @@ class MySubscriptionsVC: UIViewController {
                             
                             self.ordersArray = ordersResponse.data!
                             self.subscriptionTableView.reloadData()
+                            
+                            self.tableViewHeightConstraint.constant = CGFloat.greatestFiniteMagnitude
+                            self.subscriptionTableView.reloadData()
+                            self.subscriptionTableView.layoutIfNeeded()
+                            self.tableViewHeightConstraint.constant = self.subscriptionTableView.contentSize.height
 
                         } else {
                             print("data yok")

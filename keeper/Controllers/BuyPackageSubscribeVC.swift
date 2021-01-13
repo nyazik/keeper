@@ -20,6 +20,14 @@ class BuyPackageSubscribeVC: UIViewController {
     var selectedServiceID : String = ""
     var startingTime = ""
     
+    
+    var packageID = ""
+    var packetName = ""
+    var startEndDate = ""
+    var remainingRights = ""
+    var price = ""
+    
+    
     private var animationBackView = UIView()
     private var animationView = AnimationView()
 

@@ -34,11 +34,19 @@ class SubscriptionDetailVC: UIViewController {
     var currentDay = ""
     var currentMonth = ""
     var price = ""
-    var selectedServiceID = "" 
+    var selectedServiceID = ""
+    
+    var nameSurnameTextField = ""  
+    var cardNumberTextField = ""
+    var expirationMonthTextField = ""
+    var expirationYearTextField = ""
+    var CCVTextField = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayouts()
         print("====\(selectedServiceID)")
+        
     }
 
     func configureDate (){
@@ -91,10 +99,35 @@ class SubscriptionDetailVC: UIViewController {
         priceLabel.text = "\(price)₺"
     }
     
+    func configureShadowtoView(view: UIView){
+        view.center = self.view.center
+        view.backgroundColor = UIColor.white
+        view.layer.shadowColor = UIColor.lightGray.cgColor
+        view.layer.shadowOpacity = 0.5
+        view.layer.shadowOffset = CGSize.zero
+        view.layer.shadowRadius = 15
+    }
     
+    
+    func pricePayRoundedCorner(view : UIView){
+        view.layer.cornerRadius = 15
+    }
+    
+    
+    func configureView(view: UIView){
+        view.layer.cornerRadius = 15
+    }
+
     
     @IBAction func backButoonPressed(_ sender: UIButton) {
-        let vc = self.storyboard?.instantiateViewController(identifier: "HomeVC") as! HomeVC
+
+        let vc = self.storyboard?.instantiateViewController(identifier: "BuyPackageSubscribeVC") as! BuyPackageSubscribeVC
+        vc.selectedServiceID = selectedServiceID
+        vc.packageID = packageID
+        vc.packetName = packageID
+        vc.startEndDate = startEndDate
+        vc.remainingRights =  remainingRights
+        vc.price = price
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: false, completion: nil)
     }
@@ -109,25 +142,84 @@ class SubscriptionDetailVC: UIViewController {
         self.present(vc, animated: false, completion: nil)
     }
 
+    @IBAction func payButtonPressed(_ sender: UIButton) {
+        if nameSurnameTextField != ""  && cardNumberTextField != "" && expirationMonthTextField != "" && expirationYearTextField != "" && CCVTextField != ""{
+            buyPacket()
+            //dismiss(animated: false, completion: nil)
+        }else {
+            let alert = UIAlertController(title: "Hata", message: "Lütfen gerekli alanları doldurunuz.", preferredStyle: .alert)
+            let ok = UIAlertAction(title: "Tamam", style: .default, handler: nil)
+            alert.addAction(ok)
+            self.present(alert, animated: true, completion: nil)
+            
+        }
+    }
     
-    func configureView(view: UIView){
-        view.layer.cornerRadius = 15
+    
+    func buyPacket() {
+        let accessToken = UserDefaults.standard.string(forKey: "Autherization")!
+        
+        // Prepare URL
+        let url = URL(string:BaseURL.baseURL + "buy/\(packageID)")
+        guard let requestUrl = url else { fatalError() }
+        
+        // Prepare URL Request Object
+        var request = URLRequest(url: requestUrl)
+        request.httpMethod = "POST"
+        
+        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+
+        //HTTP Request Parameters which will be sent in HTTP Request Body
+        let postString = "packet_id=\(packageID)"
+        
+        // Set HTTP Request Body
+        request.httpBody = postString.data(using: String.Encoding.utf8);
+        
+        // Perform HTTP Request
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            
+            // Check for Error
+            if let error = error {
+                print("Error took place \(error)")
+                return
+            }
+            
+            if let data = data, let dataString = String(data: data, encoding: .utf8) {
+                print(dataString)
+            }
+            
+            guard let data = data else {return}
+            
+            do{
+                
+                let registerResponse = try JSONDecoder().decode(PostMessageResponse.self, from: data)
+                
+                if registerResponse.status{
+                    DispatchQueue.main.async {
+                        NotificationCenter.default.post(name: .buyPackage, object: nil)
+
+                        self.dismiss(animated: false, completion: nil)
+                        
+                    }
+                } else {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        
+                        let alert = UIAlertController(title: "Hata", message: registerResponse.message, preferredStyle: .alert)
+                        let ok = UIAlertAction(title: "Tamam", style: .default, handler: nil)
+                        alert.addAction(ok)
+                        
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                }
+                
+            }catch let jsonError{
+                print("Register Response = \(jsonError)")
+            }
+            
+        }
+        task.resume()
     }
 
-    
-    func configureShadowtoView(view: UIView){
-        view.center = self.view.center
-        view.backgroundColor = UIColor.white
-        view.layer.shadowColor = UIColor.lightGray.cgColor
-        view.layer.shadowOpacity = 0.5
-        view.layer.shadowOffset = CGSize.zero
-        view.layer.shadowRadius = 15
-    }
-    
-    
-    func pricePayRoundedCorner(view : UIView){
-        view.layer.cornerRadius = 15
-    }
     
    
    
