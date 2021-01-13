@@ -34,6 +34,7 @@ class CardDetailsVC: UIViewController {
         super.viewDidLoad()
         hideKeyboardWhenTappedAround()
         setupLayouts()
+        print("***\(selectedServiceID)")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -85,11 +86,8 @@ class CardDetailsVC: UIViewController {
     @IBAction func payButtonPressed(_ sender: UIButton) {
         if nameSurnameTextField.text != ""  && cardNumberTextField.text != "" && expirationMonthTextField.text != "" && expirationYearTextField.text != "" && CCVTextField.text != ""{
             buyPacket()
-            let vc = self.storyboard?.instantiateViewController(identifier: "BuyPackageSubscribeVC") as! BuyPackageSubscribeVC
-            vc.selectedServiceID = selectedServiceID
-            vc.modalPresentationStyle = .fullScreen
-            self.present(vc, animated: false, completion: nil)
-            //dismiss(animated: false, completion: nil)
+            
+//            dismiss(animated: false, completion: nil)
         }else {
             let alert = UIAlertController(title: "Hata", message: "Lütfen gerekli alanları doldurunuz.", preferredStyle: .alert)
             let ok = UIAlertAction(title: "Tamam", style: .default, handler: nil)
@@ -163,7 +161,7 @@ class CardDetailsVC: UIViewController {
 
         //HTTP Request Parameters which will be sent in HTTP Request Body
         let postString = "packet_id=\(packageID)"
-        
+        print("packet_id=\(packageID)")
         // Set HTTP Request Body
         request.httpBody = postString.data(using: String.Encoding.utf8);
         
@@ -190,7 +188,10 @@ class CardDetailsVC: UIViewController {
                     DispatchQueue.main.async {
                         NotificationCenter.default.post(name: .buyPackage, object: nil)
 
-                        self.dismiss(animated: false, completion: nil)
+                        let vc = self.storyboard?.instantiateViewController(identifier: "HomeVC") as! HomeVC
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: false, completion: nil)
+                        //self.dismiss(animated: false, completion: nil)
                         
                     }
                 } else {
@@ -205,7 +206,7 @@ class CardDetailsVC: UIViewController {
                 }
                 
             }catch let jsonError{
-                print("Register Response = \(jsonError)")
+                print("Card details Response = \(jsonError)")
             }
             
         }

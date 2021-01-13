@@ -3411,7 +3411,7 @@
                                                     <constraint firstAttribute="height" constant="596" id="Iqc-mb-tHN"/>
                                                 </constraints>
                                                 <view key="tableFooterView" contentMode="scaleToFill" id="i70-RN-MsU">
-                                                    <rect key="frame" x="0.0" y="188.33333206176755" width="414" height="90.000000000000028"/>
+                                                    <rect key="frame" x="0.0" y="188.33333206176758" width="414" height="90"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 </view>

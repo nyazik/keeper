@@ -136,6 +136,7 @@ class SubscriptionDetailVC: UIViewController {
         let vc = self.storyboard?.instantiateViewController(identifier: "CardDetailsVC") as! CardDetailsVC
         vc.selectedServiceID = selectedServiceID
         vc.packetName = packetName
+        vc.packageID = packageID
         vc.remainingRights = remainingRights
         vc.price = price
         vc.modalPresentationStyle = .fullScreen
