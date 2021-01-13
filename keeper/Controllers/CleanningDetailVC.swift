@@ -390,13 +390,17 @@ extension CleanningDetailVC: UITableViewDataSource, UITableViewDelegate{
         }
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if tableView == advantagesTableView{
-            return 30
-        }else{
-            return 70
-        }
-    }
+    
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+////        if tableView == advantagesTableView{
+////            return 40
+////        }else{
+////            return 70
+////        }
+//
+//    }
+    
+    
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension

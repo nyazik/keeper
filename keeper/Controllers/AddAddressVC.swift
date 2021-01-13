@@ -40,11 +40,13 @@ class AddAddressVC: UIViewController {
         hideKeyboardWhenTappedAround()
         setupLayouts()
         
+        cityDropDown.delegate = self
+        districtDropDown.delegate = self
+        
         if isNewAddress == true {
             addAddressButton.setTitle("Adres Ekle", for: .normal)
-            if cityDropDown.isSelected{
-                addressTitleTextField.resignFirstResponder()
-                cityDropDown.becomeFirstResponder()
+            if cityDropDown.isSelected
+            {
                 districtDropDown.isEnabled = true
                 
             }
@@ -52,6 +54,15 @@ class AddAddressVC: UIViewController {
             districtDropDown.isEnabled = true
             addAddressButton.setTitle("Güncelle", for: .normal)
         }
+        
+        cityDropDown.listWillAppear {
+            self.view.endEditing(true)
+        }
+        
+        districtDropDown.listWillAppear {
+            self.view.endEditing(true)
+        }
+        
         
         //CALLING API
         getCities()
@@ -455,6 +466,10 @@ class AddAddressVC: UIViewController {
         }
         task.resume()
     }
+    
+}
+
+extension AddAddressVC: UITextFieldDelegate {
     
 }
 
