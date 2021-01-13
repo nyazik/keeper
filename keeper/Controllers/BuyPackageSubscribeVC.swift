@@ -77,7 +77,10 @@ class BuyPackageSubscribeVC: UIViewController {
     }
     
     @IBAction func backButtonPressed(_ sender: UIButton) {
-        dismiss(animated: false, completion: nil)
+        let vc = self.storyboard?.instantiateViewController(identifier: "HomeVC") as! HomeVC
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: false, completion: nil)
+//        dismiss(animated: false, completion: nil)
     }
     
     //MARK: - Networking

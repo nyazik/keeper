@@ -87,7 +87,7 @@ class DateTimeSelectionVC: UIViewController {
         if textView == addressTextView{
             textView.text = "Adresinizi Giriniz"
         }else if textView == customerNoteTextView{
-            textView.text = "Notunuzu Yazınız."
+            textView.text = "Notunuzu Yazınız"
         }
         textView.textColor = UIColor.lightGray
     }

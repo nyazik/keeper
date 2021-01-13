@@ -43,7 +43,10 @@ class AddAddressVC: UIViewController {
         if isNewAddress == true {
             addAddressButton.setTitle("Adres Ekle", for: .normal)
             if cityDropDown.isSelected{
+                addressTitleTextField.resignFirstResponder()
+                cityDropDown.becomeFirstResponder()
                 districtDropDown.isEnabled = true
+                
             }
         }else {
             districtDropDown.isEnabled = true

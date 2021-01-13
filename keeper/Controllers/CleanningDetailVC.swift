@@ -171,11 +171,14 @@ class CleanningDetailVC: UIViewController{
     }
     
     @IBAction func backButtonPressed(_ sender: UIButton) {
-        dismiss(animated: false, completion: nil)
+        let vc = self.storyboard?.instantiateViewController(identifier: "HomeVC") as! HomeVC
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: false, completion: nil)
+//        dismiss(animated: false, completion: nil)
     }
     
     @IBAction func sendCommentButtonPressed(_ sender: UIButton) {
-        if commentTitleTextField.text != "" &&  commentTextView.text != "" && commentTextView.text != "Yorumunuz" {
+        if commentTitleTextField.text != "" &&  commentTextView.text != "" && commentTextView.text != "Yorumunuz" &&  commentRateValue != 0.0 {
             sendComment()
             commentsArray.removeAll()
             getServiceDetails()
