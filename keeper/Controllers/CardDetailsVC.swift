@@ -188,7 +188,8 @@ class CardDetailsVC: UIViewController {
                     DispatchQueue.main.async {
                         NotificationCenter.default.post(name: .buyPackage, object: nil)
 
-                        let vc = self.storyboard?.instantiateViewController(identifier: "HomeVC") as! HomeVC
+                        let vc = self.storyboard?.instantiateViewController(identifier: "BuyPackageSubscribeVC") as! BuyPackageSubscribeVC
+                        vc.selectedServiceID = self.selectedServiceID
                         vc.modalPresentationStyle = .fullScreen
                         self.present(vc, animated: false, completion: nil)
                         //self.dismiss(animated: false, completion: nil)

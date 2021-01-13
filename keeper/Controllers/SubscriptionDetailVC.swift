@@ -139,6 +139,9 @@ class SubscriptionDetailVC: UIViewController {
         vc.packageID = packageID
         vc.remainingRights = remainingRights
         vc.price = price
+        
+
+        
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: false, completion: nil)
     }
@@ -198,8 +201,13 @@ class SubscriptionDetailVC: UIViewController {
                 if registerResponse.status{
                     DispatchQueue.main.async {
                         NotificationCenter.default.post(name: .buyPackage, object: nil)
-
-                        self.dismiss(animated: false, completion: nil)
+                        
+                        let vc = self.storyboard?.instantiateViewController(identifier: "BuyPackageSubscribeVC") as! BuyPackageSubscribeVC
+                        vc.selectedServiceID = self.selectedServiceID
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: false, completion: nil)
+                        
+//                        self.dismiss(animated: false, completion: nil)
                         
                     }
                 } else {
