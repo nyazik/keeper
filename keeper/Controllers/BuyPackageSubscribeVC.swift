@@ -17,7 +17,7 @@ class BuyPackageSubscribeVC: UIViewController {
     var availablePackageArray = [PackagesDataBuyable]()
     var buyablePackageArray = [PackagesDataBuyable]()
     var connectedAvailableBuyablePackageArray = [PackagesDataBuyable]()
-    var selectedServiceID : String = ""
+    var selectedServiceID  = ""
     var startingTime = ""
     
     var packageID = ""
@@ -31,7 +31,8 @@ class BuyPackageSubscribeVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        print("starting time in BuyPackageSubscribeVC \(startingTime)")
+        print("selectedServiceID in buy package\(selectedServiceID)")
         let notificationCenter : NotificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(self.getPackage), name: .buyPackage, object: nil)
         
@@ -176,6 +177,7 @@ extension BuyPackageSubscribeVC: UICollectionViewDataSource, UICollectionViewDel
             self.present(vc, animated: false, completion: nil)
         }else{
             let vc = self.storyboard?.instantiateViewController(identifier: "CardDetailsVC") as! CardDetailsVC
+            vc.startingTime = startingTime
             vc.selectedServiceID = selectedServiceID
             vc.packageID = connectedAvailableBuyablePackageArray[tag].id!
             vc.packetName = connectedAvailableBuyablePackageArray[tag].name!

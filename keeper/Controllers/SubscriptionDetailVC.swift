@@ -41,12 +41,12 @@ class SubscriptionDetailVC: UIViewController {
     var expirationMonthTextField = ""
     var expirationYearTextField = ""
     var CCVTextField = ""
-    
+    var startingTime = "" 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayouts()
-        print("====\(selectedServiceID)")
-        
+        print("selectedServiceID in subscription detail \(selectedServiceID)")
+        print("starting time in subscription detail \(startingTime)")
     }
 
     func configureDate (){
@@ -122,6 +122,7 @@ class SubscriptionDetailVC: UIViewController {
     @IBAction func backButoonPressed(_ sender: UIButton) {
 
         let vc = self.storyboard?.instantiateViewController(identifier: "BuyPackageSubscribeVC") as! BuyPackageSubscribeVC
+        vc.startingTime = startingTime
         vc.selectedServiceID = selectedServiceID
         vc.packageID = packageID
         vc.packetName = packageID
@@ -134,6 +135,7 @@ class SubscriptionDetailVC: UIViewController {
     
     @IBAction func cardDetailButtonPressed(_ sender: Any) {
         let vc = self.storyboard?.instantiateViewController(identifier: "CardDetailsVC") as! CardDetailsVC
+        vc.startingTime = startingTime
         vc.selectedServiceID = selectedServiceID
         vc.packetName = packetName
         vc.packageID = packageID
@@ -203,6 +205,7 @@ class SubscriptionDetailVC: UIViewController {
                         NotificationCenter.default.post(name: .buyPackage, object: nil)
                         
                         let vc = self.storyboard?.instantiateViewController(identifier: "BuyPackageSubscribeVC") as! BuyPackageSubscribeVC
+                        vc.startingTime = self.startingTime
                         vc.selectedServiceID = self.selectedServiceID
                         vc.modalPresentationStyle = .fullScreen
                         self.present(vc, animated: false, completion: nil)

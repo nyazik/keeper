@@ -29,12 +29,14 @@ class CardDetailsVC: UIViewController {
     var startEndDate = ""
     var remainingRights = ""
     var price = ""
+    var startingTime = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("starting time in card detail \(startingTime)")
         hideKeyboardWhenTappedAround()
         setupLayouts()
-        print("***\(selectedServiceID)")
+        print("selectedServiceID in card detail \(selectedServiceID)")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -72,6 +74,7 @@ class CardDetailsVC: UIViewController {
     
     @IBAction func backButtonPressed(_ sender: UIButton) {
         let vc = self.storyboard?.instantiateViewController(identifier: "BuyPackageSubscribeVC") as! BuyPackageSubscribeVC
+        vc.startingTime = startingTime
         vc.selectedServiceID = selectedServiceID
         vc.packageID = packageID
         vc.packetName = packageID
@@ -100,6 +103,7 @@ class CardDetailsVC: UIViewController {
     @IBAction func subscriptionDetailButtonPressed(_ sender: UIButton) {
         
         let vc = self.storyboard?.instantiateViewController(identifier: "SubscriptionDetailVC") as! SubscriptionDetailVC
+        vc.startingTime = startingTime
         vc.selectedServiceID = selectedServiceID
         vc.packetName = packetName
         vc.startEndDate = startEndDate
@@ -189,6 +193,7 @@ class CardDetailsVC: UIViewController {
                         NotificationCenter.default.post(name: .buyPackage, object: nil)
 
                         let vc = self.storyboard?.instantiateViewController(identifier: "BuyPackageSubscribeVC") as! BuyPackageSubscribeVC
+                        vc.startingTime = self.startingTime
                         vc.selectedServiceID = self.selectedServiceID
                         vc.modalPresentationStyle = .fullScreen
                         self.present(vc, animated: false, completion: nil)

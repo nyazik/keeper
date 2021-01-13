@@ -38,6 +38,8 @@ class DateTimeSelectionVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print("12345\(intFinalStartingTime)")
+        
         print("***\(startingTime)")
         collectionView.delegate = self
         collectionView.dataSource = self
