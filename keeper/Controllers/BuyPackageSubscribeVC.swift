@@ -20,13 +20,11 @@ class BuyPackageSubscribeVC: UIViewController {
     var selectedServiceID : String = ""
     var startingTime = ""
     
-    
     var packageID = ""
     var packetName = ""
     var startEndDate = ""
     var remainingRights = ""
     var price = ""
-    
     
     private var animationBackView = UIView()
     private var animationView = AnimationView()
@@ -46,11 +44,11 @@ class BuyPackageSubscribeVC: UIViewController {
         getPackage()
     }
     
-    override func viewDidLayoutSubviews() {
-        collectionViewHeightConstraint.constant = CGFloat.greatestFiniteMagnitude
-        self.collectionView.reloadData()
-        collectionViewHeightConstraint.constant = self.collectionView.contentSize.height
-    }
+//    override func viewDidLayoutSubviews() {
+//        collectionViewHeightConstraint.constant = CGFloat.greatestFiniteMagnitude
+//        self.collectionView.reloadData()
+//        collectionViewHeightConstraint.constant = self.collectionView.contentSize.height
+//    }
     
         
     //MARK: -LOTTIE

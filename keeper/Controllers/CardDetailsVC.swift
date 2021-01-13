@@ -85,7 +85,11 @@ class CardDetailsVC: UIViewController {
     @IBAction func payButtonPressed(_ sender: UIButton) {
         if nameSurnameTextField.text != ""  && cardNumberTextField.text != "" && expirationMonthTextField.text != "" && expirationYearTextField.text != "" && CCVTextField.text != ""{
             buyPacket()
-            dismiss(animated: false, completion: nil)
+            let vc = self.storyboard?.instantiateViewController(identifier: "BuyPackageSubscribeVC") as! BuyPackageSubscribeVC
+            vc.selectedServiceID = selectedServiceID
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: false, completion: nil)
+            //dismiss(animated: false, completion: nil)
         }else {
             let alert = UIAlertController(title: "Hata", message: "Lütfen gerekli alanları doldurunuz.", preferredStyle: .alert)
             let ok = UIAlertAction(title: "Tamam", style: .default, handler: nil)
