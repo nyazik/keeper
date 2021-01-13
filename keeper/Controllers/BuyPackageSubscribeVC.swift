@@ -76,7 +76,8 @@ class BuyPackageSubscribeVC: UIViewController {
     }
     
     @IBAction func backButtonPressed(_ sender: UIButton) {
-        let vc = self.storyboard?.instantiateViewController(identifier: "HomeVC") as! HomeVC
+        let vc = self.storyboard?.instantiateViewController(identifier: "CleanningDetailVC") as! CleanningDetailVC
+        vc.selectedServiceID = selectedServiceID
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: false, completion: nil)
 //        dismiss(animated: false, completion: nil)
