@@ -41,7 +41,10 @@ class SubscriptionDetailVC: UIViewController {
     var expirationMonthTextField = ""
     var expirationYearTextField = ""
     var CCVTextField = ""
-    var startingTime = "" 
+    var startingTime = ""
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayouts()
@@ -142,7 +145,11 @@ class SubscriptionDetailVC: UIViewController {
         vc.remainingRights = remainingRights
         vc.price = price
         
-
+        vc.nameSurname = nameSurnameTextField
+        vc.cardNumber = cardNumberTextField
+        vc.expirationMonth = expirationMonthTextField
+        vc.expirationYear = expirationYearTextField
+        vc.CCV = CCVTextField
         
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: false, completion: nil)

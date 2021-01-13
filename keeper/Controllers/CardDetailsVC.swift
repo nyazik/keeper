@@ -31,12 +31,28 @@ class CardDetailsVC: UIViewController {
     var price = ""
     var startingTime = ""
     
+    var nameSurname = ""
+    var cardNumber = ""
+    var expirationMonth = ""
+    var expirationYear = ""
+    var CCV = ""
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         print("starting time in card detail \(startingTime)")
         hideKeyboardWhenTappedAround()
         setupLayouts()
         print("selectedServiceID in card detail \(selectedServiceID)")
+        configureTextFields()
+    }
+    
+    func configureTextFields(){
+        nameSurnameTextField.text = nameSurname
+        cardNumberTextField.text = cardNumber
+        expirationMonthTextField.text = expirationMonth
+        expirationYearTextField.text = expirationYear
+        CCVTextField.text = CCV
     }
     
     override func viewWillAppear(_ animated: Bool) {
